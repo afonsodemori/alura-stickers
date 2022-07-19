@@ -30,10 +30,21 @@ public class App {
 
         System.out.printf("\n= %d items found%n%n", moviesList.size());
 
+        /**
+         * CHALLENGE 002: Use your creativity to make the output cuter: use emojis with UTF-8 code, show the movie note
+         * as little stars, decorate the terminal with colors, bold and italics using ANSI codes, and more!
+         */
         for (Map<String, String> movie : moviesList) {
-            System.out.println(movie.get("title"));
+            System.out.println("\u001b[30m\u001b[46m " + movie.get("title") + " \u001b[m");
             System.out.println(movie.get("image"));
-            System.out.println(movie.get("imDbRating"));
+
+            try {
+                double rating = Double.parseDouble(movie.get("imDbRating"));
+                System.out.println("IMDB rating: " + "⭐".repeat((int) Math.round(rating)) + " " + rating + "/10");
+            } catch (NumberFormatException nfe) {
+                System.out.println("IMDB rating: \u001b[3m\u001b[31m*no rating available\u001b[m");
+            }
+
             System.out.println();
         }
     }
