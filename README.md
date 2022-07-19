@@ -4,7 +4,7 @@ Based on the content of the Immersion Course at https://www.alura.com.br/imersao
 
 ## Day 1: Consuming a Movie API with Java
 
-### Challenge 001:
+### CHALLENGE 001
 
 Consume the most popular movies' endpoint from IMDB API. Also look in the IMDB API documentation for
 the endpoint that returns the best series and the one that returns the most popular series.
