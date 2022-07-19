@@ -8,7 +8,11 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class App {
-    private static final String API_TOKEN = "some_token_here";
+    /**
+     * CHALLENGE 003: Place the IMDB API key somewhere outside the code like a configuration file (eg a .properties
+     * file) or an environment variable.
+     */
+    private static final String API_TOKEN = System.getenv("API_TOKEN");
 
     public static void main(String[] args) throws Exception {
         // Endpoint to connect to
