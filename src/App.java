@@ -3,10 +3,7 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class App {
     /**
@@ -35,12 +32,14 @@ public class App {
          * CHALLENGE 002: Use your creativity to make the output cuter: use emojis with UTF-8 code, show the movie note
          * as little stars, decorate the terminal with colors, bold and italics using ANSI codes, and more!
          */
+        String[] texts = {"Excellent", "Good", "Average", "Poor"};
+        Random random = new Random();
         for (Map<String, String> movie : moviesList) {
             System.out.println("\u001b[30m\u001b[46m " + movie.get("title") + " \u001b[m");
             System.out.println(movie.get("image"));
             StickerGenerator.generate(
                     new URL(movie.get("image")).openStream(),
-                    "Great movie!", // TODO: Make it dynamic
+                    texts[random.nextInt(texts.length)], // TODO: Make it dynamic (dynamic, not random)
                     movie.get("id")
             );
 

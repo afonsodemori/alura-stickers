@@ -5,28 +5,37 @@ import java.io.File;
 import java.io.InputStream;
 
 abstract public class StickerGenerator {
+    private static final int STICKER_WIDTH = 300;
+    private static final int TEXT_AREA_SIZE = 50;
+    private static final int FONT_SIZE = 40;
+    private static final int PADDING_BOTTOM = 10;
+
     public static void generate(InputStream stream, String text, String filename) throws Exception {
         // STEP 1: Reading the original image
         // Can create the image (ImageIO.read) from a File (new File("/path")), from an URL (new URL("https://...")), etc
         // URL url = new URL(urlString); -- replaced with InputStream (new URL(url).openStream())
         BufferedImage originalImage = ImageIO.read(stream);
 
+        // Images have different size. Calculate the desired height for the image...
+        int originalResizedHeight = (originalImage.getHeight() * STICKER_WIDTH) / originalImage.getWidth();
+        int stickerHeight = originalResizedHeight + TEXT_AREA_SIZE;
+
         // STEP 2: Creating a new image (a blank canvas to draw in)
-        BufferedImage newImage = new BufferedImage(
-                originalImage.getWidth(),
-                originalImage.getHeight() + 30,
-                BufferedImage.TRANSLUCENT
-        );
+        BufferedImage sticker = new BufferedImage(STICKER_WIDTH, stickerHeight, BufferedImage.TRANSLUCENT);
 
         // STEP 3: Insert the original image in the new one
-        Graphics2D graphics = (Graphics2D) newImage.getGraphics();
-        graphics.drawImage(originalImage, 0, 0, null);
+        Graphics2D graphics = (Graphics2D) sticker.getGraphics();
+        graphics.drawImage(originalImage, 0, 0, STICKER_WIDTH, originalResizedHeight, null);
 
         // STEP 4: Write text in the image
-        graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+        graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, FONT_SIZE));
         graphics.setColor(Color.YELLOW);
-        graphics.drawString(text, 10, newImage.getHeight() - 10);
 
-        ImageIO.write(newImage, "png", new File("out/stickers/%s.png".formatted(filename)));
+        FontMetrics metrics = graphics.getFontMetrics();
+        float coordinateX = ((float) sticker.getWidth() / 2) - ((float) metrics.stringWidth(text) / 2);
+
+        graphics.drawString(text, coordinateX, sticker.getHeight() - PADDING_BOTTOM);
+
+        ImageIO.write(sticker, "png", new File("out/stickers/%s.png".formatted(filename)));
     }
 }
