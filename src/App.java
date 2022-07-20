@@ -6,9 +6,9 @@ import java.net.http.HttpResponse;
 import java.util.*;
 
 public class App {
-    /**
-     * CHALLENGE 003: Place the IMDB API key somewhere outside the code like a configuration file (eg a .properties
-     * file) or an environment variable.
+    /*
+         Day 1, challenge 3: Place the IMDB API key somewhere outside the code like a configuration file (eg a
+         .properties file) or an environment variable.
      */
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
@@ -28,9 +28,9 @@ public class App {
 
         System.out.printf("\n= %d items found%n%n", moviesList.size());
 
-        /**
-         * CHALLENGE 002: Use your creativity to make the output cuter: use emojis with UTF-8 code, show the movie note
-         * as little stars, decorate the terminal with colors, bold and italics using ANSI codes, and more!
+        /*
+             Day 1, challenge 2: Use your creativity to make the output cuter: use emojis with UTF-8 code, show the movie
+             note as little stars, decorate the terminal with colors, bold and italics using ANSI codes, and more!
          */
         String[] texts = {"Excellent", "Good", "Average", "Poor"};
         Random random = new Random();
@@ -54,9 +54,9 @@ public class App {
         }
     }
 
-    /**
-     * CHALLENGE 001: Consume the most popular movies' endpoint from IMDB API. Also look in the IMDB API documentation
-     * for the endpoint that returns the best series and the one that returns the most popular series.
+    /*
+        Day 1, challenge 1: Consume the most popular movies' endpoint from IMDB API. Also look in the IMDB API
+        documentation for the endpoint that returns the best series and the one that returns the most popular series.
      */
     private static String selectEndpoint() {
         System.out.print("""

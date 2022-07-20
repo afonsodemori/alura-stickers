@@ -31,6 +31,9 @@ abstract public class StickerGenerator {
         graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, FONT_SIZE));
         graphics.setColor(Color.YELLOW);
 
+        /*
+            Day 2, challenge 2: Center the text on the sticker
+         */
         FontMetrics metrics = graphics.getFontMetrics();
         float coordinateX = ((float) sticker.getWidth() / 2) - ((float) metrics.stringWidth(text) / 2);
 
