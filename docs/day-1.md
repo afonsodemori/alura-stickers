@@ -16,7 +16,7 @@ Use the [IMDb API](https://www.imdb-api.com) to get info from Movies and TV Show
    ![](https://github.com/afonsodemori/alura-java-immersion/blob/275676bcb3bf443ecf5902e32ca13a95206fa2a3/docs/day-001-challenge-001.png)
 
    See implementation
-   at [day-1/src/App.java](https://github.com/afonsodemori/alura-java-immersion/blob/275676bcb3bf443ecf5902e32ca13a95206fa2a3/src/App.java)
+   at [day-1/src/App.java#L53](https://github.com/afonsodemori/alura-java-immersion/blob/275676bcb3bf443ecf5902e32ca13a95206fa2a3/src/App.java#L53)
 
 2. Use your creativity to make the output cuter: use emojis with UTF-8 code, show the movie note as little stars,
    decorate the terminal with colors, bold and italics using ANSI codes, and more!
@@ -24,13 +24,13 @@ Use the [IMDb API](https://www.imdb-api.com) to get info from Movies and TV Show
    ![](https://github.com/afonsodemori/alura-java-immersion/blob/275676bcb3bf443ecf5902e32ca13a95206fa2a3/docs/day-001-challenge-002.png)
 
    See implementation
-   at [day-1/src/App.java](https://github.com/afonsodemori/alura-java-immersion/blob/275676bcb3bf443ecf5902e32ca13a95206fa2a3/src/App.java)
+   at [day-1/src/App.java#L34](https://github.com/afonsodemori/alura-java-immersion/blob/275676bcb3bf443ecf5902e32ca13a95206fa2a3/src/App.java#L34)
 
 3. Place the IMDB API key somewhere outside the code like a configuration file (eg a .properties file)
    or an environment variable.
 
    See implementation
-   at [day-1/src/App.java](https://github.com/afonsodemori/alura-java-immersion/blob/275676bcb3bf443ecf5902e32ca13a95206fa2a3/src/App.java)
+   at [day-1/src/App.java#L12](https://github.com/afonsodemori/alura-java-immersion/blob/275676bcb3bf443ecf5902e32ca13a95206fa2a3/src/App.java#L12)
 
 4. Change JsonParser to use a JSON parsing library like Jackson or GSON.
 
