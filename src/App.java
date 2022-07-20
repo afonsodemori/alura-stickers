@@ -32,14 +32,20 @@ public class App {
              Day 1, challenge 2: Use your creativity to make the output cuter: use emojis with UTF-8 code, show the movie
              note as little stars, decorate the terminal with colors, bold and italics using ANSI codes, and more!
          */
-        String[] texts = {"Excellent", "Good", "Average", "Poor"};
-        Random random = new Random();
         for (Map<String, String> movie : moviesList) {
             System.out.println("\u001b[30m\u001b[46m " + movie.get("title") + " \u001b[m");
-            System.out.println(movie.get("image"));
+            String image = movie.get("image");
+
+            // TODO: REVIEW IT, REFACTOR IT, WORST CODE EVER. REVIEW THE WHOLE COMMIT.
+            int position = image.indexOf("@.");
+            if (position != -1) {
+                image = image.substring(0, position + 1) + ".jpg";
+            }
+
+            System.out.println(image);
             StickerGenerator.generate(
-                    new URL(movie.get("image")).openStream(),
-                    texts[random.nextInt(texts.length)], // TODO: Make it dynamic (dynamic, not random)
+                    new URL(image).openStream(),
+                    movie.get("imDbRating"),
                     movie.get("id")
             );
 
