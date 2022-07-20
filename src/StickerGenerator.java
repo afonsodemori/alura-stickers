@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
+import java.util.Random;
 
 abstract public class StickerGenerator {
     private static final int STICKER_WIDTH = 300;
@@ -28,7 +29,12 @@ abstract public class StickerGenerator {
         graphics.drawImage(originalImage, 0, 0, STICKER_WIDTH, originalResizedHeight, null);
 
         // STEP 4: Write text in the image
-        graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, FONT_SIZE));
+        /*
+            Day 2, challenge 5: Use another font like Comic Sans or Impact, the font used in memes
+         */
+        String[] fonts = {"Comic Sans MS", "Impact"};
+        Random random = new Random();
+        graphics.setFont(new Font(fonts[random.nextInt(fonts.length)], Font.BOLD, FONT_SIZE));
         graphics.setColor(Color.YELLOW);
 
         /*
