@@ -39,6 +39,12 @@ abstract public class StickerGenerator {
 
         graphics.drawString(text, coordinateX, sticker.getHeight() - PADDING_BOTTOM);
 
-        ImageIO.write(sticker, "png", new File("out/stickers/%s.png".formatted(filename)));
+        /*
+            Day 2, challenge 4: Create output directory for images if it does not already exist
+         */
+        File outputFile = new File("out/stickers/%s.png".formatted(filename));
+        outputFile.mkdirs();
+
+        ImageIO.write(sticker, "png", outputFile);
     }
 }
