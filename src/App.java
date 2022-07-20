@@ -1,4 +1,5 @@
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -37,6 +38,11 @@ public class App {
         for (Map<String, String> movie : moviesList) {
             System.out.println("\u001b[30m\u001b[46m " + movie.get("title") + " \u001b[m");
             System.out.println(movie.get("image"));
+            StickerGenerator.generate(
+                    new URL(movie.get("image")).openStream(),
+                    "Great movie!", // TODO: Make it dynamic
+                    movie.get("id")
+            );
 
             try {
                 double rating = Double.parseDouble(movie.get("imDbRating"));
