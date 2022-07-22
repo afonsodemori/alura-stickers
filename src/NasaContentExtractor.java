@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class NasaContentExtractor {
+public class NasaContentExtractor implements ContentExtractor {
     public static List<Content> extract(String json) {
         List<Map<String, String>> attributes = JsonParser.parse(json);
 
