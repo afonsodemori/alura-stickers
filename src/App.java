@@ -1,9 +1,8 @@
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class App {
     /*
@@ -15,13 +14,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         // Endpoint to connect to
         String url = selectEndpoint();
-
-        // Generating and sending the Request
-        URI uri = URI.create(url);
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(uri).GET().build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        String body = response.body();
+        String body = HttpClient.get(url);
 
         // Handling the Response
         List<Map<String, String>> moviesList = JsonParser.parse(body);
