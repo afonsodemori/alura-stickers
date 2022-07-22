@@ -31,7 +31,7 @@ abstract public class StickerGenerator {
 
         // TODO: REVIEW IT, REFACTOR IT, WORST CODE EVER. REVIEW THE WHOLE COMMIT.
         Font font;
-        if (!rating.isEmpty()) {
+        if (rating != null) {
             BufferedImage star = ImageIO.read(new FileInputStream("src/star.png"));
             graphics.drawImage(star, STICKER_WIDTH - 85, -45, null);
 
@@ -57,23 +57,28 @@ abstract public class StickerGenerator {
             Day 2, challenge 2: Center the text on the sticker
          */
         String text;
-        try {
-            float ratingFloat = Float.parseFloat(rating);
-            if (ratingFloat >= 9) {
-                text = "EXCELLENT";
-            } else if (ratingFloat > 7) {
-                text = "Good";
-            } else if(ratingFloat > 5) {
-                text = "Average";
-            } else {
-                // TODO: REFACTOR! REFACTOR! REFACTOR! REFACTOR! REFACTOR! REFACTOR!
-                text = "Melhor ver o Pelé";
-                font = new Font("Impact", Font.BOLD, FONT_SIZE);
-                graphics.setFont(font);
+        if (rating == null) {
+            text = "Topzera";
+        } else {
+            try {
+                float ratingFloat = Float.parseFloat(rating);
+                if (ratingFloat >= 9) {
+                    text = "EXCELLENT";
+                } else if (ratingFloat > 7) {
+                    text = "Good";
+                } else if(ratingFloat > 5) {
+                    text = "Average";
+                } else {
+                    // TODO: REFACTOR! REFACTOR! REFACTOR! REFACTOR! REFACTOR! REFACTOR!
+                    text = "Melhor ver o Pelé";
+                    font = new Font("Impact", Font.BOLD, FONT_SIZE);
+                    graphics.setFont(font);
+                }
+            } catch (NumberFormatException ignored) {
+                text = "unrated";
             }
-        } catch (NumberFormatException ignored) {
-            text = "unrated";
         }
+
         graphics.setColor(Color.BLUE);
         FontMetrics metrics = graphics.getFontMetrics();
         float coordinateX = ((float) sticker.getWidth() / 2) - ((float) metrics.stringWidth(text) / 2);

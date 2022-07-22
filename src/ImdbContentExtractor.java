@@ -9,7 +9,7 @@ public class ImdbContentExtractor implements ContentExtractor {
         List<Content> contents = new ArrayList<>();
 
         for (Map<String, String> attribute : attributes) {
-            contents.add(new Content(attribute.get("title"), attribute.get("image")));
+            contents.add(new Content(attribute.get("title"), attribute.get("image"), attribute.get("imDbRating")));
         }
 
         return contents;

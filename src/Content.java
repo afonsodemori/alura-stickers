@@ -1,12 +1,18 @@
-import java.util.Locale;
-
 public class Content {
     private final String title;
     private final String imageUrl;
+    private final String rating;
 
     public Content(String title, String imageUrl) {
         this.title = title;
         this.imageUrl = imageUrl;
+        this.rating = null;
+    }
+
+    public Content(String title, String imageUrl, String rating) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.rating = rating;
     }
 
     public String getTitle() {
@@ -22,5 +28,9 @@ public class Content {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getRating() {
+        return rating;
     }
 }

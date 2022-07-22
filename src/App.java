@@ -28,19 +28,20 @@ public class App {
             System.out.println(image);
             StickerGenerator.generate(
                     new URL(image).openStream(),
-                    "9.8", // TODO: New API without "rating". movie.get("imDbRating"),
+                    content.getRating(),
                     content.getSlug()
             );
 
-            /* TODO: In order to use other APIs, without "rating", we are getting rid of this part of the code for now.
-                     Implement different sticker renderers for different APIs, like we do with ContentExtractor (?)
-            try {
-                double rating = Double.parseDouble(movie.get("imDbRating"));
-                System.out.println("IMDB rating: " + "⭐".repeat((int) Math.round(rating)) + " " + rating + "/10");
-            } catch (NumberFormatException nfe) {
-                System.out.println("IMDB rating: \u001b[3m\u001b[31m*no rating available\u001b[m");
+            // TODO: Implement different sticker renderers for different APIs, like we do with ContentExtractor (?) or
+            //       write this inside the sticker generator? (ugly)
+            if (content.getRating() != null) {
+                try {
+                    double rating = Double.parseDouble(content.getRating());
+                    System.out.println("IMDB rating: " + "⭐".repeat((int) Math.round(rating)) + " " + rating + "/10");
+                } catch (NumberFormatException nfe) {
+                    System.out.println("IMDB rating: \u001b[3m\u001b[31m*no rating available\u001b[m");
+                }
             }
-             */
 
             System.out.println();
         }
