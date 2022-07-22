@@ -5,29 +5,21 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class App {
-    /*
-         Day 1, challenge 3: Place the IMDB API key somewhere outside the code like a configuration file (eg a
-         .properties file) or an environment variable.
-     */
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
     public static void main(String[] args) throws Exception {
         // Endpoint to connect to
-        String url = selectEndpoint();
+        // String url = selectEndpoint();
+        String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2022-06-12&end_date=2022-06-14";
         String body = HttpClient.get(url);
 
         // Handling the Response
-        List<Map<String, String>> moviesList = JsonParser.parse(body);
+        List<Map<String, String>> items = JsonParser.parse(body);
 
-        System.out.printf("\n= %d items found%n%n", moviesList.size());
-
-        /*
-             Day 1, challenge 2: Use your creativity to make the output cuter: use emojis with UTF-8 code, show the movie
-             note as little stars, decorate the terminal with colors, bold and italics using ANSI codes, and more!
-         */
-        for (Map<String, String> movie : moviesList) {
-            System.out.println("\u001b[30m\u001b[46m " + movie.get("title") + " \u001b[m");
-            String image = movie.get("image");
+        for (Map<String, String> item : items) {
+            System.out.println("\u001b[30m\u001b[46m " + item.get("title") + " \u001b[m");
+            // String image = item.get("image");
+            String image = item.get("url");
 
             // TODO: REVIEW IT, REFACTOR IT, WORST CODE EVER. REVIEW THE WHOLE COMMIT.
             int position = image.indexOf("@.");
@@ -38,25 +30,23 @@ public class App {
             System.out.println(image);
             StickerGenerator.generate(
                     new URL(image).openStream(),
-                    movie.get("imDbRating"),
-                    movie.get("id")
+                    "9.8", // TODO: New API without "rating". movie.get("imDbRating"),
+                    item.get("title")
             );
 
+            /* TODO: In order to use other APIs, without "rating", we are getting rid of this part of the code for now
             try {
                 double rating = Double.parseDouble(movie.get("imDbRating"));
                 System.out.println("IMDB rating: " + "⭐".repeat((int) Math.round(rating)) + " " + rating + "/10");
             } catch (NumberFormatException nfe) {
                 System.out.println("IMDB rating: \u001b[3m\u001b[31m*no rating available\u001b[m");
             }
+             */
 
             System.out.println();
         }
     }
 
-    /*
-        Day 1, challenge 1: Consume the most popular movies' endpoint from IMDB API. Also look in the IMDB API
-        documentation for the endpoint that returns the best series and the one that returns the most popular series.
-     */
     private static String selectEndpoint() {
         System.out.print("""
                 Select an option:
