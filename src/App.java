@@ -1,7 +1,6 @@
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class App {
@@ -9,19 +8,20 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         // Endpoint to connect to
-        // String url = selectEndpoint();
-        String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2022-06-12&end_date=2022-06-14";
+        String url = selectEndpoint();
+        // String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2022-06-12&end_date=2022-06-14";
         String body = HttpClient.get(url);
 
         // Handling the Response
-        List<Map<String, String>> items = JsonParser.parse(body);
+        // List<Content> contents = NasaContentExtractor.extract(body);
+        List<Content> contents = ImdbContentExtractor.extract(body);
 
-        for (Map<String, String> item : items) {
-            System.out.println("\u001b[30m\u001b[46m " + item.get("title") + " \u001b[m");
-            // String image = item.get("image");
-            String image = item.get("url");
+        for (Content content : contents) {
+            System.out.println("\u001b[30m\u001b[46m " + content.getTitle() + " \u001b[m");
+            String image = content.getImageUrl();
 
-            // TODO: REVIEW IT, REFACTOR IT, WORST CODE EVER. REVIEW THE WHOLE COMMIT.
+            // TODO: * Refactor this logic
+            //       * THIS is only for IMDb, to get the image with a better resolution
             int position = image.indexOf("@.");
             if (position != -1) {
                 image = image.substring(0, position + 1) + ".jpg";
@@ -31,7 +31,7 @@ public class App {
             StickerGenerator.generate(
                     new URL(image).openStream(),
                     "9.8", // TODO: New API without "rating". movie.get("imDbRating"),
-                    item.get("title")
+                    content.getSlug()
             );
 
             /* TODO: In order to use other APIs, without "rating", we are getting rid of this part of the code for now
