@@ -1,20 +1,18 @@
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    private static final String API_TOKEN = System.getenv("API_TOKEN");
+    // TODO: Changed to public as now I need to use it from API enum. Think of a better way or place to put it.
+    public static final String API_TOKEN = System.getenv("API_TOKEN");
 
     public static void main(String[] args) throws Exception {
-        // Endpoint to connect to
-        String url = selectEndpoint();
-        // String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2022-06-12&end_date=2022-06-14";
-        String body = HttpClient.get(url);
+        // API to connect to
+        API api = selectEndpoint();
+        String body = HttpClient.get(api.url());
 
         // Handling the Response
-        // List<Content> contents = NasaContentExtractor.extract(body);
-        List<Content> contents = ImdbContentExtractor.extract(body);
+        List<Content> contents = api.extractor().extract(body);
 
         for (Content content : contents) {
             System.out.println("\u001b[30m\u001b[46m " + content.getTitle() + " \u001b[m");
@@ -34,7 +32,8 @@ public class App {
                     content.getSlug()
             );
 
-            /* TODO: In order to use other APIs, without "rating", we are getting rid of this part of the code for now
+            /* TODO: In order to use other APIs, without "rating", we are getting rid of this part of the code for now.
+                     Implement different sticker renderers for different APIs, like we do with ContentExtractor (?)
             try {
                 double rating = Double.parseDouble(movie.get("imDbRating"));
                 System.out.println("IMDB rating: " + "⭐".repeat((int) Math.round(rating)) + " " + rating + "/10");
@@ -47,22 +46,15 @@ public class App {
         }
     }
 
-    private static String selectEndpoint() {
-        System.out.print("""
-                Select an option:
-                [1] Top 250 Movies
-                [2] Most Popular Movies
-                [3] Top 250 TVs
-                [4] Most Popular TVs
-                >\s"""
-        );
+    private static API selectEndpoint() {
+        API[] options = API.values();
 
-        List<String> options = new ArrayList<>();
-        options.add("Top250Movies");
-        options.add("MostPopularMovies");
-        options.add("Top250TVs");
-        options.add("MostPopularTVs");
+        System.out.println("Select an option:");
+        for (int optionId = 1; optionId <= options.length; optionId++) {
+            System.out.printf("[%d] %s%n", optionId, options[optionId - 1].description());
+        }
 
+        System.out.print("> ");
         Scanner scanner = new Scanner(System.in);
 
         int optionIndex = -1;
@@ -72,13 +64,13 @@ public class App {
                 optionIndex = Integer.parseInt(option) - 1;
             } catch (NumberFormatException ignored) {
             } finally {
-                if (optionIndex < 0 || optionIndex >= options.size()) {
-                    System.out.printf("Invalid option. Choose a number between 1 and %d:%n> ", options.size());
+                if (optionIndex < 0 || optionIndex >= options.length) {
+                    System.out.printf("Invalid option. Choose a number between 1 and %d:%n> ", options.length);
                     optionIndex = -1;
                 }
             }
         }
 
-        return "https://imdb-api.com/en/API/%s/%s".formatted(options.get(optionIndex), API_TOKEN);
+        return API.values()[optionIndex];
     }
 }
